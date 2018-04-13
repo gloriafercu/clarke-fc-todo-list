@@ -31,4 +31,8 @@
   display: none;
 }
 
+.strike {
+  text-decoration: line-through;
+}
+
 /*# sourceMappingURL=main.css.map */
