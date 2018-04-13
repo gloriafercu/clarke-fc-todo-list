@@ -31,8 +31,8 @@
   -webkit-box-flex: 1;
   -ms-flex: 1;
   flex: 1;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(0, 0, 0, 0.3)));
-  background-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.3) 100%);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(0, 0, 0, 0.2)));
+  background-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.2) 100%);
   width: 100%;
   min-height: 100vh;
   padding: 15px;
@@ -50,12 +50,42 @@
   -ms-flex-direction: column;
   flex-direction: column;
   width: 100%;
-  max-width: 400px;
+  max-width: 300px;
   min-height: 500px;
   background-color: #fff;
-  border-radius: 5px;
-  -webkit-box-shadow: 5px 5px 5px 2px rgba(0, 0, 0, 0.25);
-  box-shadow: 5px 5px 5px 2px rgba(0, 0, 0, 0.25);
+  border-radius: 3px;
+  -webkit-box-shadow: 0 2px 5px 1px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 2px 5px 1px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(18, 209, 188, 0.25);
+  padding-bottom: 71px;
+}
+
+.page:before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: -4px;
+  width: calc(100% + 8px);
+  height: calc(100% - 16px);
+  background-color: #fff;
+  border-radius: 3px;
+  z-index: -1;
+  -webkit-box-shadow: 0 2px 5px 1px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 2px 5px 1px rgba(0, 0, 0, 0.25);
+}
+
+.page:after {
+  content: "";
+  position: absolute;
+  top: 16px;
+  left: -8px;
+  width: calc(100% + 16px);
+  height: calc(100% - 32px);
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 3px;
+  z-index: -2;
+  -webkit-box-shadow: 0 2px 5px 1px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 2px 5px 1px rgba(0, 0, 0, 0.25);
 }
 
 .background {
@@ -135,16 +165,58 @@
   flex-direction: column;
 }
 
-.todo-list,.done {
+.done,.todo-list {
   list-style-type: none;
 }
 
 .task-li {
   padding: 8px 0;
+  position: relative;
+  margin-bottom: 5px;
 }
 
 .label-checkbox {
-  padding-left: 20px;
+  padding-left: 30px;
+}
+
+.checkbox {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: block;
+  border: 0;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+}
+
+.checkbox:before {
+  content: "";
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  display: block;
+  border: 2px solid #13d8c3;
+  border-radius: 50%;
+  background: #fff;
+  top: 8px;
+}
+
+.checkbox:checked:before {
+  border: 2px solid #07b29e;
+}
+
+.checkbox:checked:after {
+  content: "";
+  position: absolute;
+  top: 14px;
+  left: 5px;
+  width: 7px;
+  height: 4px;
+  border-left: 2px solid #07b29e;
+  border-bottom: 2px solid #07b29e;
+  -webkit-transform: rotateZ(-45deg);
+  transform: rotateZ(-45deg);
 }
 
 .container-button {
@@ -177,10 +249,9 @@
 
 .new-task {
   width: calc(100% - 40px);
-  max-width: 370px;
-  height: 120px;
+  height: auto;
   border-radius: 5px;
-  background-color: #099D8D;
+  background-color: #07b29e;
   position: absolute;
   bottom: 25px;
   left: 50%;
@@ -189,14 +260,62 @@
   margin: 0 auto;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
+  padding: 20px;
+  -webkit-box-shadow: 0 2px 5px 1px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 2px 5px 1px rgba(0, 0, 0, 0.25);
 }
 
 .new-task.hidden {
   display: none;
 }
 
+.new-task .form__newtask {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.new-task .form__newtask .new-task__label {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 11px;
+  line-height: 14px;
+  margin-bottom: 4px;
+  font-weight: 300;
+}
+
+.new-task .form__newtask .new-task__input {
+  position: relative;
+  color: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 3px;
+  background: transparent;
+  padding: 8px 10px;
+  font-size: 14px;
+  letter-spacing: 1px;
+  outline: none;
+}
+
+.new-task .form__newtask .button--add {
+  width: auto;
+  padding: 4px 30px;
+  display: block;
+  margin: 20px auto 0;
+  border-radius: 20px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+  color: white;
+  cursor: pointer;
+  outline: none;
+}
+
 .strike {
   text-decoration: line-through;
+  color: #D3D2D3;
 }
 
 /*# sourceMappingURL=main.css.map */

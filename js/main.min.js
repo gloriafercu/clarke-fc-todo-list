@@ -3,6 +3,8 @@
 var buttonAdd = document.querySelector('.button--add');
 var buttonPlus = document.querySelector('.button--plus');
 var arrayTasks = [];
+var background = document.querySelector('.background');
+
 printLocalStorage(); // Al cargar la página se imprimen las tareas que estén almacenadas previamente en el localStorage.
 
 /* Función para obtener la fecha actual al cargar la página */
@@ -16,6 +18,7 @@ function printDate() {
 	var dateWeek = document.querySelector('.date-week');
 	var monthAndYear = document.querySelector('.month-year');
 
+
 	numberDate.innerHTML = date.getDate();
 	dateWeek.innerHTML = weekdays[date.getDay()];
 	monthAndYear.innerHTML = months[date.getMonth()] + ', ' + date.getFullYear();
@@ -27,10 +30,27 @@ printDate();
 
 function addNewTask() {
 	var enterTask = document.querySelector('.new-task');
-	var background = document.querySelector('.background');
 	background.classList.toggle('hidden');
 }
 buttonPlus.addEventListener('click', addNewTask);
+
+
+/* Mostrar/ocultar background */
+window.addEventListener("click",function(e) {
+   if (e.target == background) {
+		 background.classList.add('hidden');
+	 }
+ });
+
+window.addEventListener("keydown", function (e) {
+  if (e.keyCode == 27) {
+		background.classList.add('hidden');
+  }
+});
+
+
+
+
 
 /* Botón(añadir) incorpora las nuevas tareas al To-Do list y regresa al estado inicial con botón(+) */
 
