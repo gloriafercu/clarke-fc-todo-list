@@ -14,18 +14,23 @@
 			<div class="date"></div>
 		</section>
 		<section class="tasks">
-			<ul class="todo-list">
+			<form class="form__todolist">
+				<ul class="todo-list">
 
-			</ul>
-			<ul class="completed"></ul>
-			<a class="button-plus" href="#new-task">
-				<span class="icon-plus"></span>
-			</a>
+				</ul>
+				<!-- <ul class="completed"></ul> -->
+				<button type="button" class="button--plus" name="button--add">+</button>
+				<!-- <a class="button-plus" href="#new-task">
+					<span class="icon-plus"></span>
+				</a> -->
+			</form>
 		</section>
-		<section class="new-task">
-			<label for="new-task" class="new-task__label">Nueva tarea</label>
-			<input type="text" class="new-task__input" name="new-task" id="new-task" />
-			<button type="button" class="button--add" name="button--add">Añadir</button>
+		<section class="new-task hidden">
+			<form class="form__newtask">
+				<label for="new-task" class="new-task__label">Nueva tarea</label>
+				<input type="text" class="new-task__input" name="new-task" id="new-task" />
+				<button type="button" class="button--add" name="button--add">Añadir</button>
+			</form>
 		</section>
 	</main>
 	<script src="js/main.min.js"></script>
