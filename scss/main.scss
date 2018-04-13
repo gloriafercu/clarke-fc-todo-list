@@ -2,6 +2,7 @@
 	padding: 0;
 	margin: 0;
 	box-sizing: border-box;
+	font-family: 'Roboto', sans-serif;
 }
 .site {
 	display: flex;
@@ -10,14 +11,138 @@
 	background-color: #13d8c3;
 }
 .site__content {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	flex: 1;
-	background-image: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 100%);
+	background-image: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.3) 100%);
 	width: 100%;
 	min-height: 100vh;
+	padding: 15px;
 }
-.new-task.hidden {
-	display: none;
+.page {
+	position: relative;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	max-width: 400px;
+	min-height: 500px;
+	background-color: #fff;
+	border-radius: 5px;
+	box-shadow: 5px 5px 5px 2px rgba(0, 0, 0, 0.25);
+
 }
+.background {
+	background-color: rgba(255,255,255,0.8);
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top:0;
+	left:0;
+	&.hidden{
+		display: none;
+	}
+
+}
+.container {
+	display: flex;
+	padding: 15px 30px;
+}
+
+// date
+
+.todo-header .container {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	border-bottom: 1px solid #13d8c3;
+	.logo-adalab {
+		width:  40px;
+		height: 40px;
+		background-image: url('../images/logo_adalab.png');
+		background-size: cover;
+		background-position: center center;
+		background-repeat: no-repeat;
+
+	}
+	.date {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		.date__container1 .number-date {
+			color: #07b29e;
+			font-size: 40px;
+			margin-right: 10px;
+		}
+		.date__container2 .date-week {
+			font-weight: 700;
+		}
+		.date__container2 .month-year {
+			font-weight: 300;
+			font-size: 14px;
+			color: #666;
+		}
+	}
+}
+
+// tasks
+.tasks .container {
+	flex-direction: column;
+}
+.todo-list,
+.done {
+	list-style-type: none;
+}
+.task-li {
+	padding: 8px 0;
+}
+.label-checkbox {
+		padding-left: 20px;
+}
+.container-button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-top: 1px solid #D3D2D3;
+	padding: 15px 0;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	.button--plus {
+		color: #07b29e;
+		border: 2px solid #13d8c3;
+		font-size: 30px;
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		outline: none;
+		cursor: pointer;
+	}
+}
+
+// new-task
+
+.new-task {
+	width: calc(100% - 40px);
+	max-width: 370px;
+	height: 120px;
+	border-radius: 5px;
+	background-color: #099D8D;
+	position: absolute;
+	bottom: 25px;
+	left: 50%;
+	transform: translateX(-50%);
+	margin: 0 auto;
+	box-sizing: border-box;
+
+	&.hidden {
+		display: none;
+	}
+}
+
+
 .strike {
 	text-decoration: line-through;
 }
