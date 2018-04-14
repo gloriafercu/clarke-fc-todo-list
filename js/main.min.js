@@ -133,77 +133,55 @@ function completeTasks(event) {
 	// console.log('currentTask: ', currentTask);
 
 	currentTask.parentNode.classList.toggle('strike');
-
 	var labelTask = currentTask.nextSibling.innerHTML;
 	// console.log('labelTask: ', labelTask);
 
 	var taskLocStorage = JSON.parse(localStorage.getItem('arrayTasks'));
   // console.log('taskLocStorage: ', taskLocStorage);
 
+	var tareaCompletada = [];
+	var posicionTareaCompletada = 0;
+	var posTareaPreviamenteMarcada = 0;
+
 	for (var i = 0; i < taskLocStorage.length; i++) {
 		if (labelTask === taskLocStorage[i].name) {
-			//Toggle del valor de la propierdad 'completed'
+			// PASO 1
+			tareaCompletada = taskLocStorage[i];
+			posicionTareaCompletada = i;
+			//Toggle del valor de la propiedad 'completed'
 			taskLocStorage[i].completed = !taskLocStorage[i].completed;
 		}
 	}
+	console.log('tareaCompletada', tareaCompletada);
+  console.log('posicionTareaCompletada: ', posicionTareaCompletada);
 
-	/// TEST
-	//
-	// var tareaCompletada = [];
-	// var posicionTareaCompletada = 0;
-	// var tareaDesmarcada = [];
-	// var posTareaDesmarcada = 0;
-	//
-	// /// PASO 1
-	//
-	// // Recorremos arrayAlmacen para identificar el elemento;
-	// for (var i = 0; i < taskLocStorage.length; i++) {
-	// 	if (labelTask === taskLocStorage[i].name) {
-	// 		tareaCompletada = taskLocStorage[i];
-	// 		posicionTareaCompletada = i;
-	// 	}
-	// }
-	// console.log('tareaCompletada', tareaCompletada);
-  // console.log('posicionTareaCompletada: ', posicionTareaCompletada);
-	// console.log('almacen: ', taskLocStorage);
-	//
-	//
-	// // /// PASO 2
-	//
-	// // Eliminamos tareaCompletada del arrayAlmacen;
-	// taskLocStorage.splice(posicionTareaCompletada,1);
-	// console.log('almacen modificado: ', taskLocStorage);
-	//
-	// // /// PASO 3
-	//
-	// // Colocamos el elemento eliminado al principio del array;
-	// taskLocStorage.unshift(tareaCompletada);
-	// console.log('almacen restaurado: ', taskLocStorage);
+	// PASO 2
 
-	/// PASO 4
+	// Eliminamos tareaCompletada del arrayAlmacen;
+	console.log('almacen original: ', taskLocStorage);
+	taskLocStorage.splice(posicionTareaCompletada,1);
+	console.log('almacen modificado: ', taskLocStorage);
 
-	// Recorremos arrayAlmacen para identificar el elemento;
-	// for (var i = 0; i < taskLocStorage.length; i++) {
-	// 	if (labelTask === taskLocStorage[i].name) {
-	// 		if (taskLocStorage[i].completed){
-	// 			tareaDesmarcada = taskLocStorage[i];
-	// 			posTareaDesmarcada = i;
-	// 		}
-	// 	}
-	// }
-	// console.log('tareaDesmarcada', tareaDesmarcada);
-	// console.log('almacen: ', taskLocStorage);
-	//
-	// // Eliminamos tareaDesmarcada del arrayAlmacen;
-	// taskLocStorage.splice(posTareaDesmarcada,1);
-	// console.log('almacen modificado (desmarcado): ', taskLocStorage);
-	// // Colocamos la tarea al final del array
-	//
-	// taskLocStorage.push(tareaDesmarcada);
-	// console.log('almacen restaurado (desmarcado): ', taskLocStorage);
+	// PASO 3
+	// Colocamos el elemento eliminado al principio del array en localStorage (aparece al final de la lista en el FRONT);
+	taskLocStorage.unshift(tareaCompletada);
+	console.log('almacen restaurado: ', taskLocStorage);
 
+  // PASO 4
+	for (var i = 0; i < taskLocStorage.length; i++) {
+		if ((labelTask === taskLocStorage[i].name) && (taskLocStorage[i].completed)) {
+				posTareaPreviamenteMarcada = i;
+		}
+	}
 
-		/// FIN TEST
+	// Eliminamos tareaDesmarcada del arrayAlmacen;
+ taskLocStorage.splice(posTareaPreviamenteMarcada,1);
+ console.log('almacen modificado (desmarcado): ', taskLocStorage);
+
+ // Colocamos la tarea al final del array
+ taskLocStorage.push(tareaCompletada);
+ console.log('almacen restaurado (desmarcado): ', taskLocStorage);
+
 
 	localStorage.setItem('arrayTasks', JSON.stringify(taskLocStorage));
 	// console.log('labelTask', labelTask);
