@@ -41,7 +41,7 @@ window.addEventListener("click", function(e) {
 		background.classList.add('hidden');
 	}
 });
-
+/* Ocultamos el background al pulsar la letra ESC*/
 window.addEventListener("keydown", function(e) {
 	if (e.keyCode == 27) {
 		background.classList.add('hidden');
@@ -79,6 +79,8 @@ function localStorageToDoList(task) {
 		arrayTasks = [];
 		arrayTasks.push(task);
 		localStorage.setItem('arrayTasks', JSON.stringify(arrayTasks));
+
+
 	} else {
 		arrayTasks = JSON.parse(localStorage.getItem('arrayTasks'));
 		arrayTasks.push(task);
@@ -93,13 +95,13 @@ function localStorageToDoList(task) {
 
 function printLocalStorage() {
 
-
 	var taskLocStorage = JSON.parse(localStorage.getItem('arrayTasks'));
 	if (taskLocStorage != null) {
 		var ul = document.querySelector('.todo-list');
 		var ulCompleted = document.querySelector('.done');
 		var listCompleted = '';
 		var listUncompleted = '';
+
 		taskLocStorage.reverse();
 		for (var i = 0; i < taskLocStorage.length; i++) {
 			if (taskLocStorage[i].completed) {
@@ -110,45 +112,101 @@ function printLocalStorage() {
 			}
 		}
 
+
 		ul.innerHTML = listUncompleted;
 		ulCompleted.innerHTML = listCompleted;
 
 		var checkboxes = document.querySelectorAll('.checkbox');
-		console.log('checkboxes', checkboxes);
+		// console.log('checkboxes', checkboxes);
 		for (var i = 0; i < checkboxes.length; i++) {
 			checkboxes[i].addEventListener('click', completeTasks);
 		}
 
 	}
 }
-/* Recolocar tareas*/
-
-
 
 
 /* Completar tareas terminadas */
 
 function completeTasks(event) {
 	var currentTask = event.currentTarget;
-	console.log('currentTask: ', currentTask);
+	// console.log('currentTask: ', currentTask);
 
 	currentTask.parentNode.classList.toggle('strike');
 
 	var labelTask = currentTask.nextSibling.innerHTML;
-	var taskLocStorage = JSON.parse(localStorage.getItem('arrayTasks'));
+	// console.log('labelTask: ', labelTask);
 
+	var taskLocStorage = JSON.parse(localStorage.getItem('arrayTasks'));
+  // console.log('taskLocStorage: ', taskLocStorage);
 
 	for (var i = 0; i < taskLocStorage.length; i++) {
 		if (labelTask === taskLocStorage[i].name) {
+			//Toggle del valor de la propierdad 'completed'
 			taskLocStorage[i].completed = !taskLocStorage[i].completed;
 		}
 	}
 
+	/// TEST
+	//
+	// var tareaCompletada = [];
+	// var posicionTareaCompletada = 0;
+	// var tareaDesmarcada = [];
+	// var posTareaDesmarcada = 0;
+	//
+	// /// PASO 1
+	//
+	// // Recorremos arrayAlmacen para identificar el elemento;
+	// for (var i = 0; i < taskLocStorage.length; i++) {
+	// 	if (labelTask === taskLocStorage[i].name) {
+	// 		tareaCompletada = taskLocStorage[i];
+	// 		posicionTareaCompletada = i;
+	// 	}
+	// }
+	// console.log('tareaCompletada', tareaCompletada);
+  // console.log('posicionTareaCompletada: ', posicionTareaCompletada);
+	// console.log('almacen: ', taskLocStorage);
+	//
+	//
+	// // /// PASO 2
+	//
+	// // Eliminamos tareaCompletada del arrayAlmacen;
+	// taskLocStorage.splice(posicionTareaCompletada,1);
+	// console.log('almacen modificado: ', taskLocStorage);
+	//
+	// // /// PASO 3
+	//
+	// // Colocamos el elemento eliminado al principio del array;
+	// taskLocStorage.unshift(tareaCompletada);
+	// console.log('almacen restaurado: ', taskLocStorage);
+
+	/// PASO 4
+
+	// Recorremos arrayAlmacen para identificar el elemento;
+	// for (var i = 0; i < taskLocStorage.length; i++) {
+	// 	if (labelTask === taskLocStorage[i].name) {
+	// 		if (taskLocStorage[i].completed){
+	// 			tareaDesmarcada = taskLocStorage[i];
+	// 			posTareaDesmarcada = i;
+	// 		}
+	// 	}
+	// }
+	// console.log('tareaDesmarcada', tareaDesmarcada);
+	// console.log('almacen: ', taskLocStorage);
+	//
+	// // Eliminamos tareaDesmarcada del arrayAlmacen;
+	// taskLocStorage.splice(posTareaDesmarcada,1);
+	// console.log('almacen modificado (desmarcado): ', taskLocStorage);
+	// // Colocamos la tarea al final del array
+	//
+	// taskLocStorage.push(tareaDesmarcada);
+	// console.log('almacen restaurado (desmarcado): ', taskLocStorage);
 
 
+		/// FIN TEST
 
 	localStorage.setItem('arrayTasks', JSON.stringify(taskLocStorage));
-	console.log('labelTask', labelTask);
+	// console.log('labelTask', labelTask);
 	printLocalStorage();
 
 }
