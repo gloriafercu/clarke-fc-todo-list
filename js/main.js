@@ -80,8 +80,8 @@ function localStorageToDoList(task) {
 		arrayTasks.push(task);
 		localStorage.setItem('arrayTasks', JSON.stringify(arrayTasks));
 	}
-	console.log('arrayTasks', arrayTasks);
-	console.log('lastTask ', arrayTasks[arrayTasks.length - 1].name);
+	// console.log('arrayTasks', arrayTasks);
+	// console.log('lastTask ', arrayTasks[arrayTasks.length - 1].name);
 	printLocalStorage();
 }
 
@@ -96,6 +96,7 @@ function printLocalStorage() {
 		var listUncompleted = '';
 		taskLocStorage.reverse(); // reverso del localStorage
 		for (var i = 0; i < taskLocStorage.length; i++) {
+
 			if (taskLocStorage[i].completed) {
 				listCompleted += '<li class="task-li strike"><input type="checkbox" checked="checked" class="checkbox" name="status" id="checkbox' + i + ' "/><label class="label-checkbox" for="checkbox' + i + '">' + taskLocStorage[i].name + '</label></li>';
 				// si se completa tarea se tacha la tarea y va a la lista completada
@@ -108,7 +109,7 @@ function printLocalStorage() {
 
 		// Escucha el evento click de los checkboxes de las tareas del localStorage
 		var checkboxes = document.querySelectorAll('.checkbox');
-		console.log('checkboxes', checkboxes);
+		// console.log('checkboxes', checkboxes);
 		for (var i = 0; i < checkboxes.length; i++) {
 			checkboxes[i].addEventListener('click', changeStatusTasks);
 		}
@@ -118,16 +119,17 @@ function printLocalStorage() {
 /* Marcar/Desmarcar tareas */
 function changeStatusTasks(event) {
 	var currentTask = event.currentTarget;
-	console.log('currentTask: ', currentTask);
+	// console.log('currentTask: ', currentTask);
 
 	currentTask.parentNode.classList.toggle('strike');
 	var labelTask = currentTask.nextSibling.innerHTML;
-	console.log('labelTask: ', labelTask);
+	// console.log('labelTask: ', labelTask);
 
 	var taskLocStorage = JSON.parse(localStorage.getItem('arrayTasks'));
-	console.log('taskLocStorage: ', taskLocStorage);
+	// console.log('taskLocStorage: ', taskLocStorage);
 
 	var taskDone = [];
+	var taskPreviouslyChecked = [];
 	var posiciontaskDone = 0;
 	var indexPreviouslyChecked = 0;
 
@@ -137,42 +139,47 @@ function changeStatusTasks(event) {
 			taskDone = taskLocStorage[i];
 			posiciontaskDone = i;
 			//Toggle del valor de la propiedad 'completed'
-			taskLocStorage[i].completed = !taskLocStorage[i].completed;
+				taskLocStorage[i].completed = !taskLocStorage[i].completed;
 		}
+
 	}
-	console.log('taskDone', taskDone);
-	console.log('posiciontaskDone: ', posiciontaskDone);
+	// console.log('taskDone', taskDone);
+	// console.log('posiciontaskDone: ', posiciontaskDone);
 
 	// PASO 2
 
 	// Eliminamos taskDone del arrayAlmacen;
-	console.log('almacen original: ', taskLocStorage);
+	// console.log('almacen original: ', taskLocStorage);
 	taskLocStorage.splice(posiciontaskDone, 1);
-	console.log('almacen modificado: ', taskLocStorage);
+	// console.log('almacen modificado: ', taskLocStorage);
 
 	// PASO 3
 	// Colocamos el elemento eliminado al principio del array en localStorage (aparece al final de la lista en el FRONT);
 	taskLocStorage.unshift(taskDone);
-	console.log('almacen restaurado: ', taskLocStorage);
+	// console.log('almacen restaurado: ', taskLocStorage);
 
-	// PASO 4
-	for (var i = 0; i < taskLocStorage.length; i++) {
-		if ((labelTask === taskLocStorage[i].name) && (taskLocStorage[i].completed)) {
-			indexPreviouslyChecked = i;
-		}
-	}
+	// // PASO 4
 
-	// Eliminamos tareaDesmarcada del arrayAlmacen;
-	taskLocStorage.splice(indexPreviouslyChecked, 1);
-	console.log('almacen modificado (desmarcado): ', taskLocStorage);
-
-	// Colocamos la tarea al final del array
-	taskLocStorage.push(taskDone);
-	console.log('almacen restaurado (desmarcado): ', taskLocStorage);
-
+	// for (var i = 0; i < taskLocStorage.length; i++) {
+	// 	if ((labelTask === taskLocStorage[i].name) && (taskLocStorage[i].completed)) {
+	// 		indexPreviouslyChecked = i;
+	// 		taskPreviouslyChecked = taskLocStorage[i];
+	// 		console.log('taskLocStorage',taskLocStorage[i]);
+	// 		console.log('indexPreviouslyChecked',indexPreviouslyChecked);
+	// 	}
+	// }
+	//
+	// // // Eliminamos tareaDesmarcada del arrayAlmacen;
+	// taskLocStorage.splice(indexPreviouslyChecked, 1);
+	// console.log('almacen modificado (desmarcado): ', taskLocStorage);
+	//
+	// // Colocamos la tarea al final del array
+	// taskLocStorage.push(taskDone);
+	// console.log('almacen restaurado (desmarcado): ', taskLocStorage);
+	//
 
 	localStorage.setItem('arrayTasks', JSON.stringify(taskLocStorage));
-	console.log('labelTask', labelTask);
+	// console.log('labelTask', labelTask);
 	printLocalStorage();
 
 }

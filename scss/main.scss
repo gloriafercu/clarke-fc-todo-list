@@ -83,6 +83,8 @@ $light-grey: #D3D2D3;
 	display: flex;
 	padding: 15px 30px;
 }
+
+
 // date
 .todo-header .container {
 	display: flex;
@@ -134,6 +136,11 @@ $light-grey: #D3D2D3;
 .done,
 .todo-list {
 	list-style-type: none;
+}
+
+.todo-list{
+ display: flex;
+ flex-direction: column-reverse;
 }
 
 .task-li {
