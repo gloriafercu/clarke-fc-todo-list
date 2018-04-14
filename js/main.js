@@ -130,14 +130,14 @@ function printLocalStorage() {
 
 function completeTasks(event) {
 	var currentTask = event.currentTarget;
-	// console.log('currentTask: ', currentTask);
+	console.log('currentTask: ', currentTask);
 
 	currentTask.parentNode.classList.toggle('strike');
 	var labelTask = currentTask.nextSibling.innerHTML;
-	// console.log('labelTask: ', labelTask);
+	console.log('labelTask: ', labelTask);
 
 	var taskLocStorage = JSON.parse(localStorage.getItem('arrayTasks'));
-  // console.log('taskLocStorage: ', taskLocStorage);
+  console.log('taskLocStorage: ', taskLocStorage);
 
 	var tareaCompletada = [];
 	var posicionTareaCompletada = 0;
