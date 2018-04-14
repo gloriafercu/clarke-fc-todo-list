@@ -24,7 +24,6 @@ function printDate() {
 }
 printDate();
 
-
 /* Botón(+) despliega una modal que permite crear nueva tarea */
 
 function addNewTask() {
@@ -32,7 +31,6 @@ function addNewTask() {
 	background.classList.toggle('hidden');
 }
 buttonPlus.addEventListener('click', addNewTask);
-
 
 /* Mostrar/ocultar background */
 window.addEventListener("click", function(e) {
@@ -65,10 +63,7 @@ buttonAdd.addEventListener('click', function() {
 	addNewTask();
 });
 
-/* Se almacenan los datos en el localStorage
-		- La clave está en que localStorage solo nos permite guardar un 'string' 	(setItem), por lo que primero debemos convertir nuestro objeto a string con JSON.stringify().
-		- A la hora de obtener los datos que se han guardado (getItem) en localStorage debemos hacer justo lo contrario con JSON.parse().
-*/
+/* Se almacenan los datos en el localStorage */
 
 function localStorageToDoList(task) {
 	if (localStorage.getItem('arrayTasks') == null) {
@@ -80,8 +75,6 @@ function localStorageToDoList(task) {
 		arrayTasks.push(task);
 		localStorage.setItem('arrayTasks', JSON.stringify(arrayTasks));
 	}
-	// console.log('arrayTasks', arrayTasks);
-	// console.log('lastTask ', arrayTasks[arrayTasks.length - 1].name);
 	printLocalStorage();
 }
 
@@ -96,10 +89,8 @@ function printLocalStorage() {
 		var listUncompleted = '';
 		taskLocStorage.reverse(); // reverso del localStorage
 		for (var i = 0; i < taskLocStorage.length; i++) {
-
 			if (taskLocStorage[i].completed) {
 				listCompleted += '<li class="task-li strike"><input type="checkbox" checked="checked" class="checkbox" name="status" id="checkbox' + i + ' "/><label class="label-checkbox" for="checkbox' + i + '">' + taskLocStorage[i].name + '</label></li>';
-				// si se completa tarea se tacha la tarea y va a la lista completada
 			} else {
 				listUncompleted += '<li class="task-li "><input type="checkbox" class="checkbox" name="status" id="checkbox' + i + '"/><label class="label-checkbox" for="checkbox' + i + '">' + taskLocStorage[i].name + '</label></li>';
 			}
@@ -109,7 +100,6 @@ function printLocalStorage() {
 
 		// Escucha el evento click de los checkboxes de las tareas del localStorage
 		var checkboxes = document.querySelectorAll('.checkbox');
-		// console.log('checkboxes', checkboxes);
 		for (var i = 0; i < checkboxes.length; i++) {
 			checkboxes[i].addEventListener('click', changeStatusTasks);
 		}
@@ -118,68 +108,22 @@ function printLocalStorage() {
 
 /* Marcar/Desmarcar tareas */
 function changeStatusTasks(event) {
+	var taskLocStorage = JSON.parse(localStorage.getItem('arrayTasks'));
 	var currentTask = event.currentTarget;
-	// console.log('currentTask: ', currentTask);
-
 	currentTask.parentNode.classList.toggle('strike');
 	var labelTask = currentTask.nextSibling.innerHTML;
-	// console.log('labelTask: ', labelTask);
-
-	var taskLocStorage = JSON.parse(localStorage.getItem('arrayTasks'));
-	// console.log('taskLocStorage: ', taskLocStorage);
-
 	var taskDone = [];
-	var taskPreviouslyChecked = [];
 	var posiciontaskDone = 0;
-	var indexPreviouslyChecked = 0;
 
 	for (var i = 0; i < taskLocStorage.length; i++) {
 		if (labelTask === taskLocStorage[i].name) {
-			// PASO 1
 			taskDone = taskLocStorage[i];
 			posiciontaskDone = i;
-			//Toggle del valor de la propiedad 'completed'
-				taskLocStorage[i].completed = !taskLocStorage[i].completed;
+			taskLocStorage[i].completed = !taskLocStorage[i].completed; //Toggle del valor de la propiedad 'completed'
 		}
-
 	}
-	// console.log('taskDone', taskDone);
-	// console.log('posiciontaskDone: ', posiciontaskDone);
-
-	// PASO 2
-
-	// Eliminamos taskDone del arrayAlmacen;
-	// console.log('almacen original: ', taskLocStorage);
-	taskLocStorage.splice(posiciontaskDone, 1);
-	// console.log('almacen modificado: ', taskLocStorage);
-
-	// PASO 3
-	// Colocamos el elemento eliminado al principio del array en localStorage (aparece al final de la lista en el FRONT);
-	taskLocStorage.unshift(taskDone);
-	// console.log('almacen restaurado: ', taskLocStorage);
-
-	// // PASO 4
-
-	// for (var i = 0; i < taskLocStorage.length; i++) {
-	// 	if ((labelTask === taskLocStorage[i].name) && (taskLocStorage[i].completed)) {
-	// 		indexPreviouslyChecked = i;
-	// 		taskPreviouslyChecked = taskLocStorage[i];
-	// 		console.log('taskLocStorage',taskLocStorage[i]);
-	// 		console.log('indexPreviouslyChecked',indexPreviouslyChecked);
-	// 	}
-	// }
-	//
-	// // // Eliminamos tareaDesmarcada del arrayAlmacen;
-	// taskLocStorage.splice(indexPreviouslyChecked, 1);
-	// console.log('almacen modificado (desmarcado): ', taskLocStorage);
-	//
-	// // Colocamos la tarea al final del array
-	// taskLocStorage.push(taskDone);
-	// console.log('almacen restaurado (desmarcado): ', taskLocStorage);
-	//
-
+	taskLocStorage.splice(posiciontaskDone, 1); // Eliminamos taskDone del array taskLocStorage;
+	taskLocStorage.unshift(taskDone); // Colocamos el elemento eliminado al principio del array en localStorage (aparece al final de la lista en el FRONT);
 	localStorage.setItem('arrayTasks', JSON.stringify(taskLocStorage));
-	// console.log('labelTask', labelTask);
 	printLocalStorage();
-
 }
